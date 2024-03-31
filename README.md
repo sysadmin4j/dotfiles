@@ -1,25 +1,45 @@
-# Neovim
-https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-macos.tar.gz
+<!--toc:start-->
+- [Nerd Fonts](#nerd-fonts)
+- [Kitty](#kitty)
+- [Docker Image](#docker-image)
+- [Neovim](#neovim)
+- [ripgrep (move to dockervile)](#ripgrep-move-to-dockervile)
+- [fd (move to dockerfile)](#fd-move-to-dockerfile)
+- [SSH](#ssh)
+- [Git](#git)
+- [Lazygit](#lazygit)
+- [Mason](#mason)
+- [Lazyvim](#lazyvim)
+  - [Extras](#extras)
+  - [Updates](#updates)
+  - [Neovim Setting](#neovim-setting)
+  - [Linting](#linting)
+<!--toc:end-->
 
 # Nerd Fonts
-https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Meslo.zip
+* https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Meslo.zip
 
 ```zsh
 ./install-nerd-fonts.sh
 ```
 # Kitty
+
+
+
 # Docker Image
-# ripgrep
+## Neovim
+https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-macos.tar.gz
+## ripgrep (move to dockervile)
 ```zsh
 sudo ./install-ripgrep.sh
-not as root if it's installed somewere else than /usr/local/bin/
+# not as root if it's installed somewere else than /usr/local/bin/
 ```
 
-# fd ()
-
+## fd (move to dockerfile)
 ```zsh
 sudo ./install-fs.sh
-not as root if it's installed somewere else than /usr/local/bin/
+# not as root if it's installed somewere else than /usr/local/bin/
+#
 ```
 
 # SSH
@@ -37,28 +57,24 @@ ssh-add --apple-use-keychain ~/.ssh/id_ed25519_github
 # Git
 
 ```zsh
-git config --global user.name "Your Name"
-git config --global user.email you@example.com
+git config --global user.name "Felix Langelier"
+git config --global user.email sysadmin4j@users.noreply.github.com
 cd ~/Repos/dotfiles/
 git init
 git checkout -b dev
 git add README.md
 git commit -m "firts draft"
-git remote add origin https://github.com/sysadmin4j/dotfiles.git
+git remote add origin git@github.com:sysadmin4j/dotfiles.git
 git push origin dev
 ```
 
 # Lazygit
-
-
+# Mason
 # Lazyvim
 
 
 ## Extras
-
-
-#
-
+markdown
 ## Updates
 ```vim
 :lazy
@@ -67,6 +83,8 @@ git push origin dev
 
 
 ## Neovim Setting
+
+See ~/.config/nvim/lua/config/options.lua
 
 ```lua
 # Disable conceal
