@@ -100,7 +100,7 @@ markdown
 
 ## Updates
 
-```vim
+```nvim
 :lazy
 :check
 ```
@@ -153,5 +153,11 @@ Emitted 'error' event on ChildProcess instance at:
 }
 
 Node.js v20.11.1
+```
+
+## Mason and gcompat
+[https://github.com/williamboman/mason.nvim/issues/995]
 
 ```nvim
+:MasonInstall --target=linux_x64_gnu lua-language-server
+```
