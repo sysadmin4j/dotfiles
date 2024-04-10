@@ -24,7 +24,7 @@
 ./install-nerd-fonts.sh
 ```
 
-# Kitty
+## Kitty
 
 ```zsh
 kitty -list-fonts
@@ -34,7 +34,7 @@ kitty -list-fonts
 :
 ```
 
-# Docker Image
+## Docker Image
 
 test
 
@@ -53,7 +53,7 @@ test
 
 Put a little diagram here! xclip with x11 and docker.
 
-# SSH
+## SSH
 
 Create the ssh key for github
 
@@ -91,11 +91,11 @@ vim motions?
 
 To practive
 
-# Mason
+## Mason
 
 To explore
 
-# Lazyvim
+## Lazyvim
 
 ## Extras
 
@@ -103,7 +103,7 @@ markdown
 
 ## Updates
 
-```nvim
+```vim
 :lazy
 :check
 ```
