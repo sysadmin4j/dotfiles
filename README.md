@@ -79,12 +79,15 @@ git remote add origin git@github.com:sysadmin4j/dotfiles.git
 git push origin dev
 ```
 
-# GPG
+## GPG
 
+## Markdown Preview
+
+Make sure the command xdg-open (will need a browser like chrome or firefox)
 Try worktree
 vim motions?
 
-# Lazygit
+## Lazygit
 
 To practive
 
