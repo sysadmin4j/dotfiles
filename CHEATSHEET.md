@@ -11,12 +11,10 @@
 |`<leader>l`|Lazy|
 
 ```nvim
-
 :messages
 :Lazy
-
 ```
 
 Ref:
 
-- [https://www.lazyvim.org/keymaps]
+- <https://www.lazyvim.org/keymaps>
