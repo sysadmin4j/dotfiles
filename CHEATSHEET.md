@@ -19,6 +19,7 @@
 |`<leader>ghb`|Gitsigns Blame|
 
 ```nvim
+:check
 :messages
 :Lazy
 :LazyExtras
