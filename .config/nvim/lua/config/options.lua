@@ -17,6 +17,10 @@ vim.g.minipairs_disable = true
 vim.g.mkdp_page_title = "${name}"
 vim.g.mkdp_theme = "dark"
 
+-- disable autoformat
+-- to enable it within lazyvim <Leader>uf
+vim.g.autoformat = false
+
 --[[
 
 -- for lsp debugging
