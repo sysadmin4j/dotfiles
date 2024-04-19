@@ -21,25 +21,28 @@ vim.g.mkdp_theme = "dark"
 -- to enable it within lazyvim <Leader>uf
 vim.g.autoformat = false
 
---[[
-
 -- for lsp debugging
-vim.lsp.set_log_level("info")
+-- vim.lsp.set_log_level("info")
 
--- for clipboard debugging
-vim.g.clipboard = {
-    name = 'myClipboard',
-    copy = {
-        ['+'] = 'cb copy',
-        ['*'] = 'cb copy',
-    },
-    paste = {
-        ['+'] = 'cb paste',
-        ['*'] = 'cb paste',
-    },
-    cache_enabled = 0,
-}
+-- default clipboard value set by lazyvim
 vim.opt.clipboard = "unnamedplus"
 
-]]
---
+-- for the OSC 52 clipboard configuraion
+vim.g.clipboard = {
+  name = "OSC 52",
+  copy = {
+    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+  },
+  paste = {
+    ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+  },
+}
+
+-- when the clipboard is enable, pasting with p create the folllowing error:
+-- E353: Nothing in register "
+-- remapping p to the default register
+if vim.o.clipboard == 'unnamed' or vim.g.clipboard == 'unnamedplus' then
+  vim.keymap.set({ "n" }, "p", '""p')
+end
