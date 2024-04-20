@@ -27,7 +27,9 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519_github
 ```
 
-<https://docs.pcom/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key>
+Ref:
+
+- <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent>
 
 TODO:
 
@@ -55,18 +57,17 @@ TODO:
 ## Nerd Fonts
 
 ```zsh
-# install the fonts "Meslo Nerd" in the macos user Library folder
+# install the fonts "MesloLGL Nerd Font Mono" in the macOS user Library folder
 ./scripts/install-nerd-fonts.sh
 ```
 
 ## Kitty
 
 ```zsh
-# and starting session
 ./scripts/apply-kitty-config.sh
 
-# make sure the nerd font is available for kitty
-kitty -list-fonts
+# make sure the Nerd font is available for kitty
+kitty +list-fonts | grep "MesloLGL Nerd Font Mono"
 ```
 
 ## Zsh
@@ -87,19 +88,38 @@ TODO:
 ./scripts/install-ide.sh
 ```
 
+### Build
+
+Don't forget to rebuild the ide docker image to apply Neovim configuration changes
+
+```zsh
+./scripts/docker-build-ide.sh
+```
+
 ### Configuration
+
+To reload a lua configuration within neovim
 
 ```nvim
 :source %
 ```
 
-See ~/.config/nvim/lua/config/options.lua
+See the config files:
+
+- `~/.config/nvim/lua/config/options.lua`
 
 ### Usage
 
-with X11
+The following command will start a shell in the ide container.
 
-without X11 (default)
+#### without X11 (default)
 
 ```zsh
+ide
+```
+
+#### with X11
+
+```zsh
+export IDE_X11=true; ide
 ```
