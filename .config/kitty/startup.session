@@ -1,0 +1,14 @@
+layout stack
+
+new_tab ide
+launch --keep-focus --title "editor" --env IDE_X11="true" zsh -c "source ~/.zshrc && ide nvim"
+
+#resize_window taller 15
+#launch --title "editor shell" zsh -c "source ~/.zshrc && ide"
+
+new_tab split
+launch --title "up" zsh
+launch --title "down" zsh
+
+new_tab default
+launch --title "macos zsh" zsh
