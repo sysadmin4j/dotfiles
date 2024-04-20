@@ -43,6 +43,10 @@ vim.g.clipboard = {
 -- when the clipboard is enable, pasting with p create the folllowing error:
 -- E353: Nothing in register "
 -- remapping p to the default register
-if vim.o.clipboard == 'unnamed' or vim.g.clipboard == 'unnamedplus' then
+if vim.o.clipboard == 'unnamed' or vim.o.clipboard == 'unnamedplus' then
   vim.keymap.set({ "n" }, "p", '""p')
 end
+
+-- keymap for testing the clipboard
+-- vim.keymap.set('n','z', ':set clipboard=<cr>' )
+-- vim.keymap.set('n','Z', ':set clipboard=unnamedplus<cr>' )
