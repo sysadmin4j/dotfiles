@@ -1,15 +1,22 @@
 # dotfiles
 
-This is my configurations for a development environment in a docker container (fedora) running on macos.
+My configuration files and scripts for a Neovim/LazyVim integrated development environment in a docker container (fedora).
+
+- Clipboard solution relying on OSC52
+
+<https://neovim.io/doc/user/provider.html#clipboard-osc52>
+
+- UI solution based on X11, mainly used for browser preview using xdg-open under the hood
+
+- Install and configure everything as a non-root user
+
+- Tested on macOS Sonoma
 
 ## Requirements
 
-- docker-desktop
-- kitty (or any other OSC52 compliant terminal)
-- xQuartx (for the Browser preview, avoid the buggy pasteboard)
-
-Clipboard solution relying on OSC52
-<https://neovim.io/doc/user/provider.html#clipboard-osc52>
+- Docker
+- Kitty (or any OSC52 compliant terminal)
+- xQuartz (or any X11 server)
 
 ## SSH
 
@@ -21,6 +28,11 @@ ssh-add --apple-use-keychain ~/.ssh/id_ed25519_github
 ```
 
 <https://docs.pcom/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key>
+
+TODO:
+
+- remove the usage of macos keychain, or check if it's possible to use within a docker container
+- try worktree
 
 ## Git
 
@@ -57,11 +69,17 @@ TODO:
 kitty -list-fonts
 ```
 
-```zsh
-./scripts/apply-zsh-config.sh
-```
+## Zsh
 
-## Neovim/LazyVim (whitin docker)
+Copy the .zshrc file to your home directory
+
+TODO:
+
+- install powerlevel 10k
+- share history between host and container (docker volumes)
+- script `.scripts/apply-zsh-config.sh` to complete
+
+## Neovim/LazyVim (within docker)
 
 ### Installation
 
@@ -69,32 +87,19 @@ kitty -list-fonts
 ./scripts/install-ide.sh
 ```
 
-### 
+### Configuration
 
-You can now use the ide command
-```zsh
-./docker-build.sh
-./docker-run.sh
+```nvim
+:source %
 ```
 
-
-TODO:
-
-## Markdown Preview
-
-Make sure the command xdg-open (will need a browser like chrome or firefox)
-Try worktree
-vim motions?
-
-## Lazyvim
-
-## Extras
-
-markdown
-
-
-## Updates
-
-## Neovim Setting
-
 See ~/.config/nvim/lua/config/options.lua
+
+### Usage
+
+with X11
+
+without X11 (default)
+
+```zsh
+```
