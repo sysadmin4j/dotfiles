@@ -4,8 +4,6 @@
 set -e
 
 NERD_FONTS_VERSION="3.1.1"
-#NERD_FONTS_FILENAME="NerdFontsSymbolsOnly.zip"
-#NERD_FONTS_FILENAME="3270.zip"
 NERD_FONTS_FILENAME="Meslo.zip"
 NERD_FONTS_GITHUB_RELEASE_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v${NERD_FONTS_VERSION}/${NERD_FONTS_FILENAME}"
 
