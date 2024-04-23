@@ -37,15 +37,7 @@ ENV HOME=/home/$USERNAME
 WORKDIR $HOME
 
 # run as non-root user
-USER $USERNAME
-
-# Copy nvim config files
-COPY --chown=$USERNAME .config/nvim $HOME/.config/nvim
-
-# nvim bootstrap (to avoid noice pop-up)
-RUN nvim --headless +"15sleep" +"qa!"
-RUN nvim --headless +"Lazy check" +"Lazy update" +"15sleep" +"qa!"
-RUN nvim --headless +"Mason" +"MasonInstall lua-language-server stylua" +"qa!"
+USER ${USERNAME}
 
 # Markdown preview npm dependencies installation
 # -- make sure the command xdg-open is able to open a broswer in your OS UI (will need a browser like chrome or firefox)
@@ -62,6 +54,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 ENV POWERLEVEL10K_VERSION=1.20.0
 ENV POWERLEVEL10K_URL="https://github.com/romkatv/powerlevel10k/archive/refs/tags/v$POWERLEVEL10K_URL.tar.gz"
 #RUN curl -l -O 
+# Copy nvim config files
+COPY --chown=${USERNAME} .config/nvim ${HOME}/.config/nvim
+
+# nvim bootstrap (to avoid noice pop-up)
+RUN nvim --headless +"15sleep" +"qa!"
+RUN nvim --headless +"Lazy check" +"Lazy update" +"15sleep" +"qa!"
+RUN nvim --headless +"Mason" +"MasonInstall lua-language-server stylua" +"qa!"
 
 # TODO:
 # - zsh? powerlevel10k
