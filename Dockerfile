@@ -1,11 +1,12 @@
 FROM fedora:latest
 
-ARG USERNAME=felix
-ARG UID=501
-ARG GID=20
+ARG USERNAME=ide
+ARG GROUPNAME=ide
+ARG UID=1000
+ARG GID=1000
 
 # creating the non-root user
-RUN adduser -u $UID -g $GID $USERNAME
+RUN groupadd -o -g ${GID} ${GROUPNAME} && adduser -u ${UID} -g ${GROUPNAME} ${USERNAME}
 
 # required for man pages
 RUN sed -i 's/^.*\(tsflags=nodocs\).*/# the option tsflags=nodocs has been commented by the docker build\r\n#\1/g' /etc/dnf/dnf.conf
@@ -66,4 +67,3 @@ ENV POWERLEVEL10K_URL="https://github.com/romkatv/powerlevel10k/archive/refs/tag
 # - zsh? powerlevel10k
 # - firefox or chrome config for markdown-preview
 # - install strace
-# - change username, uid, gid
