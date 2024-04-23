@@ -31,10 +31,10 @@ RUN npm install -g neovim yarn
 # setup lang and timezone
 ENV LANG=en_CA.utf8
 ENV TZ=America/Montreal
-ENV HOME=/home/$USERNAME
+ENV HOME=/home/${USERNAME}
 
 # required for npm install
-WORKDIR $HOME
+WORKDIR ${HOME}
 
 # run as non-root user
 USER ${USERNAME}
@@ -43,17 +43,17 @@ USER ${USERNAME}
 # -- make sure the command xdg-open is able to open a broswer in your OS UI (will need a browser like chrome or firefox)
 # Using the package.json from github:
 ENV MARKDOWN_PREVIEW_VERSION=0.0.10
-ENV MARKDOWN_PREVIEW_URL="https://raw.githubusercontent.com/iamcco/markdown-preview.nvim/v$MARKDOWN_PREVIEW_VERSION/package.json"
-RUN curl -f -l -O $MARKDOWN_PREVIEW_URL
-RUN npm install
+ENV MARKDOWN_PREVIEW_URL="https://raw.githubusercontent.com/iamcco/markdown-preview.nvim/v${MARKDOWN_PREVIEW_VERSION}/package.json"
+RUN curl -f -l -O ${MARKDOWN_PREVIEW_URL} && npm install
 
-COPY --chown=$USERNAME requirements.txt $HOME/requirements.txt
+COPY --chown=${USERNAME} requirements.txt ${HOME}/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 #RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 ENV POWERLEVEL10K_VERSION=1.20.0
-ENV POWERLEVEL10K_URL="https://github.com/romkatv/powerlevel10k/archive/refs/tags/v$POWERLEVEL10K_URL.tar.gz"
-#RUN curl -l -O 
+ENV POWERLEVEL10K_URL="https://github.com/romkatv/powerlevel10k/archive/refs/tags/v${POWERLEVEL10K_VERSION}.tar.gz"
+#RUN curl -f -l
+
 # Copy nvim config files
 COPY --chown=${USERNAME} .config/nvim ${HOME}/.config/nvim
 
