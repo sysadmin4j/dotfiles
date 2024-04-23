@@ -23,7 +23,7 @@ RUN dnf install -y lazygit && dnf clean all
 
 # for OSC52 clipboard patch
 RUN dnf copr enable agriffis/neovim-nightly -y
-RUN dnf install -y neovim python3-neovim
+RUN dnf install -y neovim python3-neovim && dnf clean all
 
 # installing global npm modules
 RUN npm install -g neovim yarn
@@ -52,7 +52,7 @@ RUN nvim --headless +"Mason" +"MasonInstall lua-language-server stylua" +"qa!"
 # Using the package.json from github:
 ENV MARKDOWN_PREVIEW_VERSION=0.0.10
 ENV MARKDOWN_PREVIEW_URL="https://raw.githubusercontent.com/iamcco/markdown-preview.nvim/v$MARKDOWN_PREVIEW_VERSION/package.json"
-RUN curl -l -O $MARKDOWN_PREVIEW_URL
+RUN curl -f -l -O $MARKDOWN_PREVIEW_URL
 RUN npm install
 
 COPY --chown=$USERNAME requirements.txt $HOME/requirements.txt
