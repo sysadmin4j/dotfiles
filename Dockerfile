@@ -12,7 +12,7 @@ RUN groupadd -o -g ${GID} ${GROUPNAME} && adduser -u ${UID} -g ${GROUPNAME} ${US
 RUN sed -i 's/^.*\(tsflags=nodocs\).*/# the option tsflags=nodocs has been commented by the docker build\r\n#\1/g' /etc/dnf/dnf.conf
 
 # installing feroda packages
-RUN dnf -y install man man-pages man-db git curl make gcc python3-pip icu ripgrep fd-find unzip npm nodejs wget glibc-langpack-en firefox dnf-plugins-core && dnf clean all
+RUN dnf -y install man man-pages man-db git curl make gcc strace python3-pip icu ripgrep fd-find unzip npm nodejs wget glibc-langpack-en firefox dnf-plugins-core && dnf clean all
 
 # reinstalling curl to get the man pages
 RUN dnf -y reinstall curl && dnf clean all
@@ -66,4 +66,3 @@ ENV POWERLEVEL10K_URL="https://github.com/romkatv/powerlevel10k/archive/refs/tag
 # TODO:
 # - zsh? powerlevel10k
 # - firefox or chrome config for markdown-preview
-# - install strace
