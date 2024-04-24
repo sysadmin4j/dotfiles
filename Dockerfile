@@ -1,4 +1,4 @@
-FROM fedora:latest
+FROM fedora:40
 
 ARG USERNAME=ide
 ARG GROUPNAME=ide
@@ -23,7 +23,9 @@ RUN dnf install -y lazygit && dnf clean all
 
 # for OSC52 clipboard patch
 RUN dnf copr enable agriffis/neovim-nightly -y
-RUN dnf install -y neovim python3-neovim && dnf clean all
+# Mason registry is broken on the latest nightly build, specifying a neovim working version
+# https://copr.fedorainfracloud.org/coprs/agriffis/neovim-nightly/package/neovim/
+RUN dnf install -y neovim-0.10.0~dev.2976.g208852126-1.fc40.aarch64 python3-neovim && dnf clean all
 
 # installing global npm modules
 RUN npm install -g neovim yarn
@@ -70,6 +72,6 @@ COPY --chown=${USERNAME} .config/nvim ${HOME}/.config/nvim
 # nvim bootstrap (to avoid noice pop-up)
 RUN nvim --headless +"15sleep" +"qa!"
 RUN nvim --headless +"Lazy check" +"Lazy update" +"15sleep" +"qa!"
-RUN nvim --headless +"Mason" +"MasonInstall lua-language-server stylua" +"qa!"
+RUN nvim --headless +"Mason" +"MasonInstall lua-language-server stylua docker-compose-language-service dockerfile-language-server" +"qa!"
 
 CMD ["/bin/zsh"]
