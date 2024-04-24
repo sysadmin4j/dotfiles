@@ -5,17 +5,17 @@ ARG GROUPNAME=ide
 ARG UID=1000
 ARG GID=1000
 
-# creating the non-root user
-RUN groupadd -o -g ${GID} ${GROUPNAME} && adduser -u ${UID} -g ${GROUPNAME} ${USERNAME}
-
 # required for man pages
 RUN sed -i 's/^.*\(tsflags=nodocs\).*/# the option tsflags=nodocs has been commented by the docker build\r\n#\1/g' /etc/dnf/dnf.conf
 
 # installing feroda packages
-RUN dnf -y install man man-pages man-db git curl make gcc strace python3-pip icu ripgrep fd-find unzip npm nodejs wget glibc-langpack-en firefox dnf-plugins-core && dnf clean all
+RUN dnf -y install man man-pages man-db zsh git curl make gcc strace python3-pip icu ripgrep fd-find unzip npm nodejs wget glibc-langpack-en firefox dnf-plugins-core && dnf clean all
 
 # reinstalling curl to get the man pages
 RUN dnf -y reinstall curl && dnf clean all
+
+# creating the non-root user
+RUN groupadd -o -g ${GID} ${GROUPNAME} && adduser -u ${UID} -g ${GROUPNAME} -s /bin/zsh ${USERNAME}
 
 # installing lazygit
 RUN dnf copr enable atim/lazygit -y
@@ -49,10 +49,20 @@ RUN curl -f -l -O ${MARKDOWN_PREVIEW_URL} && npm install
 COPY --chown=${USERNAME} requirements.txt ${HOME}/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-#RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+# Copy the zsh config files
+COPY --chown=${USERNAME} .zshrc ${HOME}/.zshrc
+COPY --chown=${USERNAME} .p10k.zsh ${HOME}/.p10k.zsh
+
+# Create the folder to store .zsh_history
+RUN mkdir -p ${HOME}/.local/state/zsh
+
+# Installing powerlevel10k
 ENV POWERLEVEL10K_VERSION=1.20.0
 ENV POWERLEVEL10K_URL="https://github.com/romkatv/powerlevel10k/archive/refs/tags/v${POWERLEVEL10K_VERSION}.tar.gz"
-#RUN curl -f -l
+RUN curl -f -L ${POWERLEVEL10K_URL} -o powerlevel10k.tar.gz && \
+  mkdir -p ${HOME}/.local/share/zsh/powerlevel10k && \
+  tar -zxf powerlevel10k.tar.gz --strip-components=1 -C ${HOME}/.local/share/zsh/powerlevel10k && \
+  rm powerlevel10k.tar.gz
 
 # Copy nvim config files
 COPY --chown=${USERNAME} .config/nvim ${HOME}/.config/nvim
@@ -62,6 +72,4 @@ RUN nvim --headless +"15sleep" +"qa!"
 RUN nvim --headless +"Lazy check" +"Lazy update" +"15sleep" +"qa!"
 RUN nvim --headless +"Mason" +"MasonInstall lua-language-server stylua" +"qa!"
 
-# TODO:
-# - zsh? powerlevel10k
-# - firefox or chrome config for markdown-preview
+CMD ["/bin/zsh"]
