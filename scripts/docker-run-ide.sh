@@ -53,6 +53,7 @@ docker run -it --rm \
 	-v ${HOME}/.ssh:/home/${USER}/.ssh \
 	-v ${HOME}/.gitconfig:/home/${USER}/.gitconfig \
 	-v ${HOME}/.local/state/zsh:/home/${USER}/.local/state/zsh \
+	-v ${HOME}/.cache/gitstatus:/home/${USER}/.cache/gitstatus \
 	-v ${HOME}/.local/state/nvim/sessions:/home/${USER}/.local/state/nvim/sessions \
 	-v ${HOME}/.local/state/nvim/shada:/home/${USER}/.local/state/nvim/shada \
 	-v ${HOME}/Repos:/home/${USER}/Repos \
