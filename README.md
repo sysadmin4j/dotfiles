@@ -3,19 +3,16 @@
 My configuration files and scripts for a Neovim/LazyVim integrated development environment in a docker container (fedora).
 
 - Clipboard solution relying on OSC52
-
-<https://neovim.io/doc/user/provider.html#clipboard-osc52>
-
+  - [neovim clipboard-osc52 documentation](https://neovim.io/doc/user/provider.html#clipboard-osc52)
 - UI solution based on X11, mainly used for browser preview using xdg-open under the hood
-
 - Install and configure everything as a non-root user
-
 - Tested on macOS Sonoma
 
 ## Requirements
 
 - Docker
 - Kitty (or any OSC52 compliant terminal)
+  - [OSC52 supported terminal list](https://github.com/ojroques/vim-oscyank)
 - xQuartz (or any X11 server)
 
 ## SSH
@@ -56,33 +53,39 @@ TODO:
 
 ## Nerd Fonts
 
+Install the fonts *MesloLGL Nerd Font Mono* in the macOS user Library folder
+
 ```zsh
-# install the fonts "MesloLGL Nerd Font Mono" in the macOS user Library folder
 ./scripts/install-nerd-fonts.sh
 ```
 
 ## Kitty
 
+
 ```zsh
 ./scripts/apply-kitty-config.sh
+```
 
-# make sure the Nerd font is available for kitty
+Make sure the Nerd font is available for kitty
+
+```zsh
 kitty +list-fonts | grep "MesloLGL Nerd Font Mono"
 ```
 
 ## Zsh
 
-Copy the .zshrc file to your home directory
-
-TODO:
-
-- install powerlevel 10k
 - share history between host and container (docker volumes)
 - script `.scripts/apply-zsh-config.sh` to complete
+
+```zsh
+./scripts/apply-zsh-config.sh
+```
 
 ## Neovim/LazyVim (within docker)
 
 ### Installation
+
+
 
 ```zsh
 ./scripts/install-ide.sh
@@ -95,6 +98,13 @@ Don't forget to rebuild the ide docker image to apply Neovim configuration chang
 ```zsh
 ./scripts/docker-build-ide.sh
 ```
+
+| ENV | Default value *(in ./scripts/docker-build-ide.sh)* |  Description |
+| -------------- | -------------- | --------------- |
+| IDE_USERNAME | felix | username of the docker image non-root user |
+| IDE_GROUPNAME | staff | groupname of the docker image non-root user |
+| IDE_UID | 501 | uid of the docker image non-root user, **must match the uid of the user running the ide command on the docker host** |
+| IDE_GID | 20 | gid of the docker image non-root user, **must match the primary gid of the user running the ide command on the docker host** |
 
 ### Configuration
 
@@ -109,6 +119,13 @@ See the config files:
 - `~/.config/nvim/lua/config/options.lua`
 
 ### Usage
+
+| ENV | Default value *(in ./scripts/docker-run-ide.sh)* | Description |
+| -------------- | -------------- | --------------- |
+| IDE_IMAGE_NAME | ide | image name to use|
+| IDE_IMAGE_VERISON | latest | image version to use |
+| IDE_X11 | false | start a x11 session, used mainly for browser preview *`<Leader>cp`* |
+| IDE_DEBUG | false | print debug messages at the console |
 
 The following command will start a shell in the ide container.
 
