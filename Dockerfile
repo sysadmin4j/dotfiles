@@ -11,6 +11,10 @@ RUN sed -i 's/^.*\(tsflags=nodocs\).*/# the option tsflags=nodocs has been comme
 # installing feroda packages
 RUN dnf -y install man man-pages man-db zsh git curl make gcc strace python3-pip icu ripgrep fd-find unzip npm nodejs wget glibc-langpack-en firefox dnf-plugins-core && dnf clean all
 
+# installing docker
+RUN dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+RUN dnf -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-compose && dnf clean all
+
 # reinstalling curl to get the man pages
 RUN dnf -y reinstall curl && dnf clean all
 

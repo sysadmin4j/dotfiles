@@ -6,6 +6,7 @@ My configuration files and scripts for a Neovim/LazyVim integrated development e
   - [neovim clipboard-osc52 documentation](https://neovim.io/doc/user/provider.html#clipboard-osc52)
 - UI solution based on X11, mainly used for browser preview using xdg-open under the hood
 - Install and configure everything as a non-root user
+- Docker in Docker (dnd)
 - Tested on macOS Sonoma
 
 ## Requirements

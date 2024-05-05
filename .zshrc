@@ -1,3 +1,6 @@
+# Docker in Docker (dnd)
+export DOCKER_HOST=tcp://localhost:2375
+
 # History
 export HISTFILE=${HOME}/.local/state/zsh/.zsh_history
 setopt share_history
