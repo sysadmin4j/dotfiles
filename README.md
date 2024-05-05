@@ -106,6 +106,7 @@ Don't forget to rebuild the ide docker image to apply Neovim configuration chang
 | IDE_GROUPNAME | staff | groupname of the docker image non-root user |
 | IDE_UID | 501 | uid of the docker image non-root user, **must match the uid of the user running the ide command on the docker host** |
 | IDE_GID | 20 | gid of the docker image non-root user, **must match the primary gid of the user running the ide command on the docker host** |
+| IDE_HOME_DIR | /Users/${USERNAME} | home directory of the docker image non-root user, **must match the your $HOME folder of the user runnung the ide command on the docker host** |
 
 ### Configuration
 
@@ -127,6 +128,7 @@ See the config files:
 | IDE_IMAGE_VERISON | latest | image version to use |
 | IDE_X11 | false | start a x11 session, used mainly for browser preview *`<Leader>cp`* |
 | IDE_DEBUG | false | print debug messages at the console |
+| IDE_WORKSPACE | ${HOME}/Repos | your workspace directory, the location of your git repositories |
 
 The following command will start a shell in the ide container.
 
