@@ -48,6 +48,20 @@ fi
 log_debug "FILE_TO_OPEN_VOLUME_OPTS=${FILE_TO_OPEN_VOLUME_OPTS}"
 log_debug "IMAGE_CMD=${IMAGE_CMD}"
 
+# for docker in docker (dnd)
+# expose the docker unix socket to tcp localhost:2375 with socat
+# https://github.com/docker/roadmap/issues/189
+if [[ $(netstat -a -alnp tcp | grep LISTEN | grep 127.0.0.1.2375) ]]; then
+  log_debug "socat exist, skipping..." 
+else
+  log_debug "starting socat"
+  docker run -d --rm \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -p 127.0.0.1:2375:2375 \
+    alpine/socat:latest \
+    TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock > /dev/null
+fi
+
 docker run -it --rm \
 	-u $(id -u ${USER}):$(id -g ${USER}) \
 	-v ${HOME}/.ssh:/home/${USER}/.ssh \
