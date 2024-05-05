@@ -4,6 +4,7 @@ ARG USERNAME=ide
 ARG GROUPNAME=ide
 ARG UID=1000
 ARG GID=1000
+ARG HOME_DIR="/Users/${USERNAME}"
 
 # required for man pages
 RUN sed -i 's/^.*\(tsflags=nodocs\).*/# the option tsflags=nodocs has been commented by the docker build\r\n#\1/g' /etc/dnf/dnf.conf
@@ -19,7 +20,7 @@ RUN dnf -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin do
 RUN dnf -y reinstall curl && dnf clean all
 
 # creating the non-root user
-RUN groupadd -o -g ${GID} ${GROUPNAME} && adduser -u ${UID} -g ${GROUPNAME} -s /bin/zsh ${USERNAME}
+RUN groupadd -o -g ${GID} ${GROUPNAME} && adduser -u ${UID} -g ${GROUPNAME} -d ${HOME_DIR} -s /bin/zsh ${USERNAME}
 
 # installing lazygit
 RUN dnf copr enable atim/lazygit -y
@@ -38,7 +39,7 @@ RUN npm install -g neovim yarn
 # setup lang and timezone
 ENV LANG=en_CA.utf8
 ENV TZ=America/Montreal
-ENV HOME=/home/${USERNAME}
+ENV HOME=${HOME_DIR}
 
 # required for npm install
 WORKDIR ${HOME}

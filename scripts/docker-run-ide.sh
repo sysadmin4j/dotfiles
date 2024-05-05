@@ -1,10 +1,11 @@
 #!/bin/bash
 
+DEBUG="${IDE_DEBUG:-false}"
 IMAGE_NAME="${IDE_IMAGE_NAME:-ide}"
 IMAGE_VERSION="${IDE_IMAGE_VERSION:-latest}"
 IMAGE_CMD="$@"
-DEBUG="${IDE_DEBUG:-false}"
 LOG_CMD="logger -t $1 -s"
+WORKSPACE="${IDE_WORKSAPCE:-${HOME}/Repos}"
 X11="${IDE_X11:-false}"
 X11_COMMAND="xhost +localhost"
 
@@ -64,16 +65,16 @@ fi
 
 docker run -it --rm \
 	-u $(id -u ${USER}):$(id -g ${USER}) \
-	-v ${HOME}/.ssh:/home/${USER}/.ssh \
-	-v ${HOME}/.gitconfig:/home/${USER}/.gitconfig \
-	-v ${HOME}/.local/state/zsh:/home/${USER}/.local/state/zsh \
-	-v ${HOME}/.cache/gitstatus:/home/${USER}/.cache/gitstatus \
-	-v ${HOME}/.local/state/nvim/sessions:/home/${USER}/.local/state/nvim/sessions \
-	-v ${HOME}/.local/state/nvim/shada:/home/${USER}/.local/state/nvim/shada \
-	-v ${HOME}/Repos:/home/${USER}/Repos \
+	-v ${HOME}/.ssh:${HOME}/.ssh \
+	-v ${HOME}/.gitconfig:${HOME}/.gitconfig \
+	-v ${HOME}/.local/state/zsh:${HOME}/.local/state/zsh \
+	-v ${HOME}/.cache/gitstatus:${HOME}/.cache/gitstatus \
+	-v ${HOME}/.local/state/nvim/sessions:${HOME}/.local/state/nvim/sessions \
+	-v ${HOME}/.local/state/nvim/shada:${HOME}/.local/state/nvim/shada \
+	-v ${WORKSPACE}:${WORKSPACE} \
 	${FILE_TO_OPEN_VOLUME_OPTS} \
 	-e DISPLAY=host.docker.internal:0 \
-	-w /home/${USER} \
+	-w ${WORKSPACE} \
 	--cap-add=SYS_PTRACE \
 	--net=host \
 	${IMAGE_NAME}:${IMAGE_VERSION} \
