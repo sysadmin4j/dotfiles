@@ -1,18 +1,19 @@
-echo "Sweet Home: " $HOME
+echo "Sweet Home: ${HOME}"
 
 # adding user bin folder to the path
 path+=(${HOME}/.local/bin)
 export PATH
 
-export GIT_REPOS_PATH=~/Repos
+# set the ide workspace location
+export IDE_WORKSPACE="${HOME}/Repos"
 
 # Aliases
 alias jump="ssh jump"
 alias nvim="ide nvim"
-alias build-ide="${GIT_REPOS_PATH}/dotfiles/scripts/docker-build-ide.sh"
-alias install-ide="${GIT_REPOS_PATH}/dotfiles/scripts/install-ide.sh"
-alias apply-zsh-config="${GIT_REPOS_PATH}/dotfiles/scripts/apply-zsh-config.sh"
-alias repos="cd ${GIT_REPOS_PATH}"
+alias build-ide="${IDE_WORKSPACE}/dotfiles/scripts/docker-build-ide.sh"
+alias install-ide="${IDE_WORKSPACE}/dotfiles/scripts/install-ide.sh"
+alias apply-zsh-config="${IDE_WORKSPACE}/dotfiles/scripts/apply-zsh-config.sh"
+alias repos="cd ${IDE_WORKSPACE}"
 
 # History
 export HISTFILE=${HOME}/.local/state/zsh/.zsh_history
