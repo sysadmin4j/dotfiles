@@ -63,15 +63,20 @@ else
     TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock > /dev/null
 fi
 
+# TODO:
+# - map known hosts intead of: -v ${HOME}/.ssh:${HOME}/.ssh \
+# - integrate fix-ssh-auth-sock-perm.sh to this script
+#
 docker run -it --rm \
 	-u $(id -u ${USER}):$(id -g ${USER}) \
-	-v ${HOME}/.ssh:${HOME}/.ssh \
 	-v ${HOME}/.gitconfig:${HOME}/.gitconfig \
 	-v ${HOME}/.local/state/zsh:${HOME}/.local/state/zsh \
 	-v ${HOME}/.cache/gitstatus:${HOME}/.cache/gitstatus \
 	-v ${HOME}/.local/state/nvim/sessions:${HOME}/.local/state/nvim/sessions \
 	-v ${HOME}/.local/state/nvim/shada:${HOME}/.local/state/nvim/shada \
 	-v ${WORKSPACE}:${WORKSPACE} \
+  --mount type=bind,source=/run/host-services/ssh-auth.sock,target=/run/host-services/ssh-auth.sock \
+  -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock \
 	${FILE_TO_OPEN_VOLUME_OPTS} \
 	-e DISPLAY=host.docker.internal:0 \
 	-w ${WORKSPACE} \
