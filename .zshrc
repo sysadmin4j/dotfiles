@@ -16,3 +16,20 @@ source ${HOME}/.local/share/zsh/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Fix the permissions of /run/host-services/ssh-auth.sock, to be able to use the socket as a non-root USER
+# the permissions change will affect all the containers of the host, and must be executed after a docker service restart
+# here are the default permissions of the socket
+# ❯ ls -al /run/host-services/ssh-auth.sock
+# srw-rw---- 1 root root 0 May  6 22:28 /run/host-services/ssh-auth.sock
+# Ref:
+# - https://docs.docker.com/desktop/networking/#ssh-agent-forwarding
+SSH_AUTH_SOCK="/run/host-services/ssh-auth.sock"
+
+# if the ssh socket is not own by the current user, run a container as root to change the ownership
+if [[ ! -O "${SSH_AUTO_SOCK}" ]]; then
+  docker run -it --rm -u root \
+    --mount type=bind,source=${SSH_AUTH_SOCK},target=${SSH_AUTH_SOCK} \
+	  alpine:latest \
+    chown $(id -u ${USER}):$(id -g ${USER}) ${SSH_AUTH_SOCK}
+fi

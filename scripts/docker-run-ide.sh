@@ -63,13 +63,10 @@ else
     TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock > /dev/null
 fi
 
-# TODO:
-# - map known hosts intead of: -v ${HOME}/.ssh:${HOME}/.ssh \
-# - integrate fix-ssh-auth-sock-perm.sh to this script
-#
 docker run -it --rm \
 	-u $(id -u ${USER}):$(id -g ${USER}) \
 	-v ${HOME}/.gitconfig:${HOME}/.gitconfig \
+	-v ${HOME}/.ssh/known_hosts:${HOME}/.ssh/known_hosts \
 	-v ${HOME}/.local/state/zsh:${HOME}/.local/state/zsh \
 	-v ${HOME}/.cache/gitstatus:${HOME}/.cache/gitstatus \
 	-v ${HOME}/.local/state/nvim/sessions:${HOME}/.local/state/nvim/sessions \
