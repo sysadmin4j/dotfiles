@@ -10,7 +10,7 @@ ARG HOME_DIR="/Users/${USERNAME}"
 RUN sed -i 's/^.*\(tsflags=nodocs\).*/# the option tsflags=nodocs has been commented by the docker build\r\n#\1/g' /etc/dnf/dnf.conf
 
 # installing feroda packages
-RUN dnf -y install man man-pages man-db zsh git curl make gcc strace python3-pip icu ripgrep fd-find unzip npm nodejs wget glibc-langpack-en firefox dnf-plugins-core && dnf clean all
+RUN dnf -y install man man-pages man-db zsh git curl make gcc strace jq python3-pip icu ripgrep fd-find unzip npm nodejs wget glibc-langpack-en firefox dnf-plugins-core && dnf clean all
 
 # installing docker
 RUN dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
