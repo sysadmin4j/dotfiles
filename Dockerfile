@@ -52,7 +52,7 @@ USER ${USERNAME}
 # Using the package.json from github:
 ENV MARKDOWN_PREVIEW_VERSION=0.0.10
 ENV MARKDOWN_PREVIEW_URL="https://raw.githubusercontent.com/iamcco/markdown-preview.nvim/v${MARKDOWN_PREVIEW_VERSION}/package.json"
-RUN curl -f -l -O ${MARKDOWN_PREVIEW_URL} && npm install
+RUN curl -f -l -O ${MARKDOWN_PREVIEW_URL} && npm install --maxsockets 1
 
 COPY --chown=${USERNAME} requirements.txt ${HOME}/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
