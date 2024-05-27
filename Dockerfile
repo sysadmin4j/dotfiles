@@ -79,7 +79,7 @@ COPY --chown=${USERNAME} .config/nvim ${HOME}/.config/nvim
 RUN nvim --headless +"15sleep" +"qa!"
 RUN nvim --headless +"Lazy check" +"Lazy update" +"15sleep" +"qa!"
 RUN nvim --headless +"Mason" +"MasonInstall \
-  lua-language-server
+  lua-language-server \
   stylua \
   docker-compose-language-service \
   dockerfile-language-server \
