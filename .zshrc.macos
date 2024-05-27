@@ -18,3 +18,8 @@ alias repos="cd ${IDE_WORKSPACE}"
 # History
 export HISTFILE=${HOME}/.local/state/zsh/.zsh_history
 setopt share_history
+
+# not on ssh login, if the ssh agent has no identities, login to github.com
+if [[ -z "$SSH_TTY" ]]; then
+  ssh-add -l |grep -q "The agent has no identities." && ssh -T git@github.com
+fi
