@@ -1,4 +1,4 @@
-FROM fedora:40
+FROM fedora:41
 
 ARG USERNAME=ide
 ARG GROUPNAME=ide
@@ -10,7 +10,7 @@ ARG HOME_DIR="/Users/${USERNAME}"
 RUN sed -i 's/^.*\(tsflags=nodocs\).*/# the option tsflags=nodocs has been commented by the docker build\r\n#\1/g' /etc/dnf/dnf.conf
 
 # installing feroda packages
-RUN dnf -y install man man-pages man-db zsh git curl make gcc strace jq python3-pip icu ripgrep fd-find unzip npm nodejs wget glibc-langpack-en firefox dnf-plugins-core && dnf clean all
+RUN dnf -y install neovim python3-neovim man man-pages man-db zsh git curl make gcc strace jq python3-pip icu ripgrep fd-find unzip npm nodejs wget glibc-langpack-en firefox dnf-plugins-core && dnf clean all
 
 # installing docker
 RUN dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
@@ -27,10 +27,10 @@ RUN dnf copr enable atim/lazygit -y
 RUN dnf install -y lazygit && dnf clean all
 
 # for OSC52 clipboard patch
-RUN dnf copr enable agriffis/neovim-nightly -y
+#RUN dnf copr enable agriffis/neovim-nightly -y
 # https://copr.fedorainfracloud.org/coprs/agriffis/neovim-nightly/package/neovim/
 # to specify a fix version (see the commented line bellow)
-RUN dnf install -y neovim-0.10.0~dev.2976.g208852126-1.fc40.aarch64 python3-neovim && dnf clean all
+#RUN dnf install -y neovim-0.10.0~dev.2976.g208852126-1.fc40.aarch64 python3-neovim && dnf clean all
 #RUN dnf install -y neovim python3-neovim && dnf clean all
 
 # installing global npm modules
