@@ -1,4 +1,4 @@
-FROM fedora:41
+FROM fedora:40
 
 ARG USERNAME=ide
 ARG GROUPNAME=ide
