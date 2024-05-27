@@ -30,8 +30,8 @@ RUN dnf install -y lazygit && dnf clean all
 RUN dnf copr enable agriffis/neovim-nightly -y
 # https://copr.fedorainfracloud.org/coprs/agriffis/neovim-nightly/package/neovim/
 # to specify a fix version (see the commented line bellow)
-#RUN dnf install -y neovim-0.10.0~dev.2976.g208852126-1.fc40.aarch64 python3-neovim && dnf clean all
-RUN dnf install -y neovim python3-neovim && dnf clean all
+RUN dnf install -y neovim-0.10.0~dev.2976.g208852126-1.fc40.aarch64 python3-neovim && dnf clean all
+#RUN dnf install -y neovim python3-neovim && dnf clean all
 
 # installing global npm modules
 RUN npm install -g neovim yarn
