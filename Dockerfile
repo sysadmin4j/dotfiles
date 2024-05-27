@@ -76,22 +76,22 @@ RUN curl -f -L ${POWERLEVEL10K_URL} -o powerlevel10k.tar.gz && \
 COPY --chown=${USERNAME} .config/nvim ${HOME}/.config/nvim
 
 # nvim bootstrap (to avoid noice pop-up)
-RUN nvim --headless +"15sleep" +"qa!"
-RUN nvim --headless +"Lazy check" +"Lazy update" +"15sleep" +"qa!"
-RUN nvim --headless +"Mason" +"MasonInstall \
-  lua-language-server \
-  stylua \
-  docker-compose-language-service \
-  dockerfile-language-server \
-  shfmt \
-  typescript-language-server \
-  json-lsp \
-  pyright \
-  ruff-lsp \
-  hadolint \
-  markdownlint \
-  marksman \
-  ruff-lsp \
-  --target=linux_x64_gnu" +"qa!"
+#RUN nvim --headless +"15sleep" +"qa!"
+#RUN nvim --headless +"Lazy check" +"Lazy update" +"15sleep" +"qa!"
+#RUN nvim --headless +"Mason" +"MasonInstall \
+#  lua-language-server \
+#  stylua \
+#  docker-compose-language-service \
+#  dockerfile-language-server \
+#  shfmt \
+#  typescript-language-server \
+#  json-lsp \
+#  pyright \
+#  ruff-lsp \
+#  hadolint \
+#  markdownlint \
+#  marksman \
+#  ruff-lsp \
+#  --target=linux_x64_gnu" +"qa!"
 
 CMD ["/bin/zsh"]
