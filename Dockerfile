@@ -1,4 +1,4 @@
-FROM fedora:40
+FROM --platform=linux/amd64 fedora:40
 
 ARG USERNAME=ide
 ARG GROUPNAME=ide
