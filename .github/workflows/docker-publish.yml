@@ -73,13 +73,13 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
-          platforms: linux/arm64/v8
+          platforms: linux/arm64,linux/amd64
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          #cache-from: type=gha
-          #cache-to: type=gha,mode=max
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       
       # https://github.blog/2021-12-06-safeguard-container-signing-capability-actions/
       - name: Sign the images with GitHub OIDC Token
