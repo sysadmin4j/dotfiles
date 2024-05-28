@@ -10,7 +10,7 @@ ARG HOME_DIR="/Users/${USERNAME}"
 RUN sed -i 's/^.*\(tsflags=nodocs\).*/# the option tsflags=nodocs has been commented by the docker build\r\n#\1/g' /etc/dnf/dnf.conf
 
 # installing feroda packages
-RUN dnf -y install man man-pages man-db zsh git curl make gcc strace jq python3-pip icu ripgrep fd-find unzip npm nodejs wget glibc-langpack-en firefox dnf-plugins-core && dnf clean all
+RUN dnf -y install iputils net-tools man man-pages man-db zsh git curl make gcc strace jq python3-pip icu ripgrep fd-find unzip npm nodejs wget glibc-langpack-en firefox dnf-plugins-core && dnf clean all
 
 # installing docker
 RUN dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
@@ -35,6 +35,12 @@ RUN dnf install -y neovim python3-neovim && dnf clean all
 
 # installing global npm modules
 RUN npm install -g neovim yarn
+
+# for Saleor
+RUN npm install -g pnpm@8.9.0 saleor-cli
+
+# ping requirement for saleor-cli
+RUN setcap cap_net_raw+p /usr/bin/ping
 
 # setup lang and timezone
 ENV LANG=en_CA.utf8
