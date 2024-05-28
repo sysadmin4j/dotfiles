@@ -50,6 +50,10 @@ ENV HOME=${HOME_DIR}
 # required for npm install
 WORKDIR ${HOME}
 
+# adding sudo all to the image user
+# uncomment to test package installations in a more convenient way
+RUN echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ide-user
+
 # run as non-root user
 USER ${USERNAME}
 
