@@ -42,9 +42,6 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
 
       # Set up BuildKit Docker container builder to be able to build
       # multi-platform images and export cache
