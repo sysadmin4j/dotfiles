@@ -77,7 +77,7 @@ COPY --chown=${USERNAME} .config/nvim ${HOME}/.config/nvim
 
 # nvim bootstrap (to avoid noice pop-up)
 RUN nvim --headless +"15sleep" +"qa!"
-RUN nvim --headless +"Lazy sync" +"Lazy check" +"Lazy update" +"15sleep" +"qa!"
+RUN nvim --headless +"Lazy sync" +"Lazy check" +"Lazy update" +"60sleep" +"qa!"
 RUN nvim --headless +"Mason" +"MasonInstall \
   lua-language-server \
   stylua \
