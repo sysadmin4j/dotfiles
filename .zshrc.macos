@@ -1,5 +1,3 @@
-echo "Sweet Home: ${HOME}"
-
 # adding user bin folder to the path
 path+=(${HOME}/.local/bin)
 export PATH
@@ -7,7 +5,7 @@ export PATH
 # set the ide workspace location
 export IDE_WORKSPACE="${HOME}/Repos"
 
-# Aliases
+# set aliases
 alias jump="ssh jump"
 alias nvim="ide nvim"
 alias build-ide="${IDE_WORKSPACE}/dotfiles/scripts/docker-build-ide.sh"
@@ -15,11 +13,13 @@ alias install-ide="${IDE_WORKSPACE}/dotfiles/scripts/install-ide.sh"
 alias apply-zsh-config="${IDE_WORKSPACE}/dotfiles/scripts/apply-zsh-config.sh"
 alias repos="cd ${IDE_WORKSPACE}"
 
-# History
+# set history
 export HISTFILE=${HOME}/.local/state/zsh/.zsh_history
 setopt share_history
 
-# not on ssh login, if the ssh agent has no identities, login to github.com
+# if the ssh agent has no identities, login to github.com
 if [[ -z "$SSH_TTY" ]]; then
   ssh-add -l |grep -q "The agent has no identities." && ssh -T git@github.com
 fi
+
+echo "Sweet Home: ${HOME}"
