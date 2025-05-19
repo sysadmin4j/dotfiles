@@ -23,9 +23,9 @@ export SAVEHIST=10000000
 setopt sharehistory
 setopt extendedhistory
 
-# if the ssh agent has no identities, login to github.com
+# if the ssh agent has no identities, login to github.com and azure
 if [[ -z "$SSH_TTY" ]]; then
-  ssh-add -l |grep -q "The agent has no identities." && ssh -T git@github.com
+  ssh-add -l |grep -q -n "The agent has no identities." && ssh -T git@github.com && ssh -T git@ssh.dev.azure.com
 fi
 
 echo "Sweet Home: ${HOME}"
