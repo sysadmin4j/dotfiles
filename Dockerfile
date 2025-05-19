@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM fedora:40
+FROM --platform=$BUILDPLATFORM fedora:42
 
 ARG USERNAME=ide
 ARG GROUPNAME=ide
@@ -20,11 +20,8 @@ RUN dnf -y install \
        && dnf clean all
 
 # installing docker
-RUN dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-RUN dnf -y install socat docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-compose && dnf clean all
-
-# reinstalling curl to get the man pages
-RUN dnf -y reinstall curl && dnf clean all
+RUN dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+RUN dnf -y install socat docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin && dnf clean all
 
 # creating the non-root user
 RUN groupadd -o -g ${GID} ${GROUPNAME} && adduser -u ${UID} -g ${GROUPNAME} -d ${HOME_DIR} -s /bin/zsh ${USERNAME}
@@ -42,7 +39,7 @@ RUN dnf install -y lazygit && dnf clean all
 RUN dnf install -y neovim python3-neovim && dnf clean all
 
 # installing terraform
-RUN dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+RUN dnf config-manager addrepo --from-repofile=https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
 RUN dnf -y install terraform
 
 # install kubelogin
@@ -119,7 +116,6 @@ RUN curl -f -L ${FLUX_URL} -o flux.tar.gz && \
 COPY --chown=${USERNAME} .config/nvim ${HOME}/.config/nvim
 
 # nvim bootstrap (to avoid noice pop-up)
-RUN nvim --headless +"Lazy check" +"Lazy update" +"qa!"
 RUN nvim --headless +"Mason" +"MasonInstall \
     docker-compose-language-service \
     dockerfile-language-server \
@@ -137,5 +133,6 @@ RUN nvim --headless +"Mason" +"MasonInstall \
     typescript-language-server\
     vtsls" \
   +"qa!"
+RUN nvim --headless +"Lazy check" +"Lazy sync" +"qa!"
 
 CMD ["/bin/zsh"]
