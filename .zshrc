@@ -1,9 +1,9 @@
+# adding user bin folder to the path
+path+=(${HOME}/.local/bin)
+export PATH
+
 # Docker in Docker (dnd)
 export DOCKER_HOST=tcp://localhost:2375
-
-# History
-export HISTFILE=${HOME}/.local/state/zsh/.zsh_history
-setopt share_history
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -33,3 +33,13 @@ if [[ ! -O "${SSH_AUTO_SOCK}" ]]; then
 	  alpine:latest \
     chown $(id -u ${USER}):$(id -g ${USER}) ${SSH_AUTH_SOCK}
 fi
+
+# History
+# #######
+# use the following command to see all the history:
+# history 1
+export HISTFILE=${HOME}/.local/state/zsh/.zsh_history
+export HISTSIZE=10000000
+export SAVEHIST=10000000
+setopt sharehistory
+setopt extendedhistory

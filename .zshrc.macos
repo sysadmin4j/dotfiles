@@ -13,9 +13,15 @@ alias install-ide="${IDE_WORKSPACE}/dotfiles/scripts/install-ide.sh"
 alias apply-zsh-config="${IDE_WORKSPACE}/dotfiles/scripts/apply-zsh-config.sh"
 alias repos="cd ${IDE_WORKSPACE}"
 
-# set history
+# History
+# #######
+# use the following command to see all the history:
+# history 1
 export HISTFILE=${HOME}/.local/state/zsh/.zsh_history
-setopt share_history
+export HISTSIZE=10000000
+export SAVEHIST=10000000
+setopt sharehistory
+setopt extendedhistory
 
 # if the ssh agent has no identities, login to github.com
 if [[ -z "$SSH_TTY" ]]; then
