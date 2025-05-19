@@ -5,12 +5,19 @@ ARG GROUPNAME=ide
 ARG UID=1000
 ARG GID=1000
 ARG HOME_DIR="/Users/${USERNAME}"
+ARG TARGETARCH
 
 # required for man pages
-RUN sed -i 's/^.*\(tsflags=nodocs\).*/# the option tsflags=nodocs has been commented by the docker build\r\n#\1/g' /etc/dnf/dnf.conf
+#RUN sed -i 's/^.*\(tsflags=nodocs\).*/# the option tsflags=nodocs has been commented by the docker build\r\n#\1/g' /etc/dnf/dnf.conf
 
 # installing feroda packages
-RUN dnf -y install iputils net-tools man man-pages man-db zsh git curl make gcc strace jq python3-pip icu ripgrep fd-find unzip npm nodejs wget glibc-langpack-en firefox dnf-plugins-core && dnf clean all
+RUN dnf -y install \
+       #man man-pages man-db \
+       wkhtmltopdf bind-utils iputils net-tools zsh \
+       git curl make gcc strace jq python3-pip icu ripgrep uv\
+       fd-find unzip npm nodejs wget glibc-langpack-en firefox \
+       fzf azure-cli kubernetes-client helm dnf-plugins-core \
+       && dnf clean all
 
 # installing docker
 RUN dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
@@ -26,12 +33,20 @@ RUN groupadd -o -g ${GID} ${GROUPNAME} && adduser -u ${UID} -g ${GROUPNAME} -d $
 RUN dnf copr enable atim/lazygit -y
 RUN dnf install -y lazygit && dnf clean all
 
+# installing neovim
 # for OSC52 clipboard patch
-RUN dnf copr enable agriffis/neovim-nightly -y
+#RUN dnf copr enable agriffis/neovim-nightly -y
 # https://copr.fedorainfracloud.org/coprs/agriffis/neovim-nightly/package/neovim/
 # to specify a fix version (see the commented line bellow)
 #RUN dnf install -y neovim-0.10.0~dev.2976.g208852126-1.fc40.aarch64 python3-neovim && dnf clean all
 RUN dnf install -y neovim python3-neovim && dnf clean all
+
+# installing terraform
+RUN dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+RUN dnf -y install terraform
+
+# install kubelogin
+RUN az aks install-cli
 
 # installing global npm modules
 RUN npm install -g neovim yarn
@@ -57,18 +72,34 @@ RUN echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ide-user
 # run as non-root user
 USER ${USERNAME}
 
+# installing krew
+RUN ( set -x; cd "$(mktemp -d)" && \
+      OS="$(uname | tr '[:upper:]' '[:lower:]')" && \
+      ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
+      KREW="krew-${OS}_${ARCH}" && \
+      curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" && \
+      tar zxvf "${KREW}.tar.gz" && \
+      ./"${KREW}" install krew \
+    )
+ENV PATH="${HOME}/.krew/bin:${PATH}"
 
-COPY --chown=${USERNAME} requirements.txt ${HOME}/requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# installing kubens and stern
+RUN kubectl krew install ns stern
 
-# Copy the zsh config files
+# setup python virtual env
+COPY --chown=${USERNAME} pyproject.toml ${HOME}/pyproject.toml
+RUN uv sync --link-mode=copy
+ENV UV_PROJECT_ENVIRONMENT=${HOME}/.venv
+RUN source ${UV_PROJECT_ENVIRONMENT}/bin/activate
+
+# copy the zsh config files
 COPY --chown=${USERNAME} .zshrc ${HOME}/.zshrc
 COPY --chown=${USERNAME} .p10k.zsh ${HOME}/.p10k.zsh
 
-# Create the folder to store .zsh_history
+# create the folder to store .zsh_history
 RUN mkdir -p ${HOME}/.local/state/zsh
 
-# Installing powerlevel10k
+# installing powerlevel10k
 ENV POWERLEVEL10K_VERSION=1.20.0
 ENV POWERLEVEL10K_URL="https://github.com/romkatv/powerlevel10k/archive/refs/tags/v${POWERLEVEL10K_VERSION}.tar.gz"
 RUN curl -f -L ${POWERLEVEL10K_URL} -o powerlevel10k.tar.gz && \
@@ -76,26 +107,35 @@ RUN curl -f -L ${POWERLEVEL10K_URL} -o powerlevel10k.tar.gz && \
   tar -zxf powerlevel10k.tar.gz --strip-components=1 -C ${HOME}/.local/share/zsh/powerlevel10k && \
   rm powerlevel10k.tar.gz
 
-# Copy nvim config files
+# installing flux2 cli
+ENV FLUX_VERSION=2.5.1
+ENV FLUX_URL=https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_${TARGETARCH}.tar.gz
+RUN curl -f -L ${FLUX_URL} -o flux.tar.gz && \
+  mkdir -p ${HOME}/.local/bin && \
+  tar -zxf flux.tar.gz -C ${HOME}/.local/bin && \
+  rm flux.tar.gz
+
+# copy nvim config files
 COPY --chown=${USERNAME} .config/nvim ${HOME}/.config/nvim
 
 # nvim bootstrap (to avoid noice pop-up)
-RUN nvim --headless +"30sleep" +"qa!"
-RUN nvim --headless +"Lazy check" +"Lazy update" +"30sleep" +"qa!"
+RUN nvim --headless +"Lazy check" +"Lazy update" +"qa!"
 RUN nvim --headless +"Mason" +"MasonInstall \
-  lua-language-server \
-  stylua \
-  docker-compose-language-service \
-  dockerfile-language-server \
-  shfmt \
-  typescript-language-server \
-  json-lsp \
-  pyright \
-  ruff-lsp \
-  hadolint \
-  markdownlint \
-  marksman \
-  ruff-lsp \
-  --target=linux_x64_gnu" +"qa!"
+    docker-compose-language-service \
+    dockerfile-language-server \
+    hadolint \
+    json-lsp \
+    lua-language-server \
+    markdown-toc \
+    markdownlint \
+    markdownlint-cli2 \
+    marksman \
+    pyright \
+    ruff \
+    shfmt \
+    stylua \
+    typescript-language-server\
+    vtsls" \
+  +"qa!"
 
 CMD ["/bin/zsh"]
