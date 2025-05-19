@@ -66,6 +66,7 @@ fi
 docker run -it --rm \
 	-u $(id -u ${USER}):$(id -g ${USER}) \
 	-v ${HOME}/.gitconfig:${HOME}/.gitconfig \
+	-v ${HOME}/.config/lazygit:${HOME}/.config/lazygit \
 	-v ${HOME}/.ssh/known_hosts:${HOME}/.ssh/known_hosts \
 	-v ${HOME}/.local/state/zsh:${HOME}/.local/state/zsh \
 	-v ${HOME}/.cache/gitstatus:${HOME}/.cache/gitstatus \
