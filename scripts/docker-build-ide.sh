@@ -8,7 +8,7 @@ IMG_HOME_DIR="${IDE_HOME_DIR:-/Users/${IMG_USERNAME}}"
 
 cd $(dirname $0)/..
 
-docker build \
+docker buildx build \
   --build-arg="USERNAME=${IMG_USERNAME}" \
   --build-arg="GROUPNAME=${IMG_GROUPNAME}" \
   --build-arg="UID=${IMG_UID}" \
