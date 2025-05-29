@@ -155,12 +155,6 @@ See the config files:
 
 - `~/.config/nvim/lua/config/options.lua`
 
-#### Expose a service, example the dev port 3000
-
-For docker-desktop on macOS make sure the *Enable host networking* option is **enable**
-
-<img src="docker-net-host.png">
-
 ### Usage
 
 | ENV | Default value *(in ./scripts/docker-run-ide.sh)* | Description |
