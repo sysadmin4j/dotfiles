@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.1](https://github.com/sysadmin4j/dotfiles/compare/v1.0.0...v1.0.1) (2025-05-30)
+
+
+### Bug Fixes
+
+* disable skip pr ([d71cafa](https://github.com/sysadmin4j/dotfiles/commit/d71cafa78f53ecbf61ed9cd7768f5d3a4aa1158b))
+* skip pr ([edfe91a](https://github.com/sysadmin4j/dotfiles/commit/edfe91aff4ad11c285ea54bd199739c52628bb76))
+* skip pr ([b93d229](https://github.com/sysadmin4j/dotfiles/commit/b93d229210d532d3aae2dbbff86b2a21b4f3cb63))
+
 ## 1.0.0 (2025-05-30)
 
 
