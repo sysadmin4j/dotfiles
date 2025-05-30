@@ -19,4 +19,3 @@ jobs:
           release-type: simple
           target-branch: main
           skip-github-pull-request: true
-
