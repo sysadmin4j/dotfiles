@@ -7,7 +7,7 @@ My configuration files and scripts for a Neovim/LazyVim integrated development e
 - UI solution based on X11, mainly used for browser preview using xdg-open under the hood
 - Install and configure everything as a non-root user
 - Docker in Docker (dnd)
-- Tested on macOS Sonoma
+- Tested on macOS Sonoma and Sequoia
 
 ## Requirements
 
