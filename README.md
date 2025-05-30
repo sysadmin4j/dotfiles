@@ -12,7 +12,7 @@ My configuration files and scripts for a Neovim/LazyVim integrated development e
 ## Requirements
 
 - Docker
-- Kitty (or any OSC52 compliant terminal)
+- Kitty or Ghostty (or any OSC52 compliant terminal)
   - [OSC52 supported terminal list](https://github.com/ojroques/vim-oscyank)
 - xQuartz (or any X11 server)
 
