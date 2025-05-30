@@ -19,3 +19,4 @@ jobs:
           release-type: simple
           target-branch: main
           skip-github-pull-request: true
+          include-v-in-tag: true
