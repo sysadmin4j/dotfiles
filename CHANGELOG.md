@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/sysadmin4j/dotfiles/compare/v1.1.0...v1.2.0) (2025-05-31)
+
+
+### Features
+
+* adding copilot plugin toggle ([#47](https://github.com/sysadmin4j/dotfiles/issues/47)) ([ee34852](https://github.com/sysadmin4j/dotfiles/commit/ee3485253cf65414512ac442f7efc1f33dff0371))
+
+
+### Bug Fixes
+
+* set vim terminal to zsh ([#49](https://github.com/sysadmin4j/dotfiles/issues/49)) ([4a1aa7c](https://github.com/sysadmin4j/dotfiles/commit/4a1aa7c54f529caf6b33529d7359a12771d245d1))
+
 ## [1.1.0](https://github.com/sysadmin4j/dotfiles/compare/v1.0.0...v1.1.0) (2025-05-30)
 
 
