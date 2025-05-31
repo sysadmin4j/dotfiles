@@ -17,6 +17,7 @@
 |`<leader>ghs`|Gitsigns Hunk Stage|
 |`<leader>ghs`|Gitsigns Undo Hunk Stage|
 |`<leader>ghb`|Gitsigns Blame|
+|`<leader>at` |Toogle Copilot|
 
 ```nvim
 :check
