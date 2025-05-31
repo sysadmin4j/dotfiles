@@ -5,6 +5,7 @@
 vim.opt.conceallevel = 0
 vim.opt.spell = false
 vim.opt.wrap = false
+vim.opt.shell = "zsh"
 
 -- https://github.com/echasnovski/mini.nvim/blob/main/doc/mini-pairs.txt
 -- disable the mini.pairs plugin
